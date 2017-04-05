@@ -18,10 +18,7 @@ export class ItemListComponent implements OnInit {
     this.items = this.items.filter(function(e:Item) {return e.id !== idItem})
   }
 
-  selectItemHandler(selectedItem) {
-    console.log(selectedItem);
-  }
-
+  
   ngOnInit() {
   }
 

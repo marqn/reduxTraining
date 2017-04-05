@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
+import {Item} from "../../models/Item";
+import {Store} from "@ngrx/store";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-item-details',
@@ -6,7 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemDetailsComponent implements OnInit {
 
-  constructor() { }
+  selectedItem:Observable<Item>;
+
+  nameItem:string;
+  description:string;
+
+  constructor(private store:Store<Item>) {
+    this.selectedItem = store.select('items');
+    this.selectedItem.subscribe(v => {
+        console.log(v);
+        if (v) {
+          this.nameItem = v.name;
+          this.description = v.description;
+        }
+      }
+    );
+  }
 
   ngOnInit() {
   }
@@ -16,7 +34,7 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   cancelItem() {
-    console.log('cancel');
+    console.log(this.selectedItem);
   }
 
 }

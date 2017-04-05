@@ -15,13 +15,13 @@ import {ItemService} from "./services/item.service";
     AppComponent,
     ItemComponent,
     ItemListComponent,
-    ItemDetailsComponent
+    ItemDetailsComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    StoreModule.provideStore(items)
+    StoreModule.provideStore({items})
   ],
   providers: [ItemService],
   bootstrap: [AppComponent]
