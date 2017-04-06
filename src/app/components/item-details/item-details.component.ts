@@ -20,12 +20,14 @@ export class ItemDetailsComponent {
 
   constructor(private store:Store<AppStore>) {
     this.items = store.select('items');
-    
+
     this.selectedItem = store.select('selectedItem');
     this.selectedItem.subscribe(v => {
       console.log(v);
-     /* this.nameItem = v.name;
-      this.description = v.description;*/
+      if(v) {
+        this.nameItem = v.name;
+        this.description = v.description;
+      }
     });
   }
 
