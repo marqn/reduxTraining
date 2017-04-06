@@ -1,40 +1,51 @@
-import {Component, OnInit} from "@angular/core";
-import {Item} from "../../models/Item";
+import {Component} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
+import {AppStore} from "../../models/appstore.model";
+import {ADD_ITEM} from "../../actions/actions";
 
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html'
 })
-export class ItemDetailsComponent implements OnInit {
+export class ItemDetailsComponent {
 
-  selectedItem:Observable<Item>;
+  public items:Observable<any>;
 
-  nameItem:string;
-  description:string;
+  private id:number = 0;
+  private nameItem:string = '';
+  private description:string = '';
 
-  constructor(private store:Store<Item>) {
-    this.selectedItem = store.select('items');
-    this.selectedItem.subscribe(v => {
-        console.log(v);
-        if (v) {
-          this.nameItem = v.name;
-          this.description = v.description;
-        }
-      }
-    );
-  }
-
-  ngOnInit() {
+  constructor(private store:Store<AppStore>) {
+    this.items = store.select('items');
   }
 
   saveItem() {
-    console.log('add item');
+    if(!this.isEmptyForm()) {
+      this.store.dispatch({type: ADD_ITEM, payload: {id: this.nextId(), name: this.nameItem, description: this.description}});
+      this.clearForm();
+    }
   }
 
-  cancelItem() {
-    console.log(this.selectedItem);
+  clearItem() {
+    this.clearForm();
   }
+
+  private clearForm():void {
+    this.nameItem = '';
+    this.description = '';
+  }
+
+  private isEmptyForm():boolean {
+    if (this.nameItem != '' && this.description != '')
+      return false;
+    else
+      return true;
+  }
+
+  private nextId():number {
+    return ++this.id;
+  }
+
 
 }

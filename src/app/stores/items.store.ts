@@ -1,18 +1,18 @@
-export const SELECT_ITEM = 'SELECT_ITEM';
-export const DELETE_ITEM = 'DELETE_ITEM';
-export const CREATE_ITEM = 'CREATE_ITEM';
+import {SELECT_ITEM, ADD_ITEM, DELETE_ITEM} from "../actions/actions";
 
-export const items = (state:any = null, {type, payload}) => {
-  switch (type) {
+export const items = (state:any = [], action) => {
+  switch (action.type) {
 
-    case SELECT_ITEM:
-      return payload;
-
-    case CREATE_ITEM:
-      return [...state, payload];
+    case ADD_ITEM:
+      return [...state,
+        Object.assign({},
+          {id: action.payload.id, name: action.payload.name, description: action.payload.description })
+      ];
 
     case DELETE_ITEM:
-      return payload;
+      console.log(state);
+      return state
+        .filter(items => items.id !== action.payload);
 
     default:
       return state;

@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {Item} from "../../models/Item";
 import { Store } from '@ngrx/store';
-import {SELECT_ITEM, DELETE_ITEM} from "../../stores/items.store";
+import {AppStore} from "../../models/appstore.model";
+import {SELECT_ITEM} from "../../actions/actions";
 
 @Component({
   selector: 'app-item',
@@ -12,7 +13,7 @@ export class ItemComponent {
   @Input() item:Item;
   @Output() delete = new EventEmitter();
 
-  constructor(private store:Store<Item>) { }
+  constructor(private store:Store<AppStore>) { }
 
   selectItem() {
     this.store.dispatch({type: SELECT_ITEM, payload: this.item});

@@ -1,25 +1,24 @@
-import {Component, OnInit} from "@angular/core";
-import {Item} from "../../models/Item";
-import {ItemService} from "../../services/item.service";
+import {Component} from "@angular/core";
+import {AppStore} from "../../models/appstore.model";
+import {Store} from "@ngrx/store";
+import {DELETE_ITEM} from "../../actions/actions";
 
 @Component({
   selector: 'app-item-list',
   templateUrl: './item-list.component.html'
 })
-export class ItemListComponent implements OnInit {
+export class ItemListComponent {
 
-  items:Array<Item>;
+  public items;
 
-  constructor(private itemService:ItemService) {
-    this.items = itemService.getItems();
+  constructor(private store:Store<AppStore>) {
+    store.select('items').subscribe(v => {
+      this.items = v;
+    });
   }
 
   deleteItemHandler(idItem):void {
-    this.items = this.items.filter(function(e:Item) {return e.id !== idItem})
-  }
-
-  
-  ngOnInit() {
+    this.store.dispatch({type: DELETE_ITEM, payload: idItem});
   }
 
 }
