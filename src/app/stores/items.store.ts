@@ -1,6 +1,7 @@
-import {SELECT_ITEM, ADD_ITEM, DELETE_ITEM} from "../actions/actions";
+import { ADD_ITEM, DELETE_ITEM } from "../actions/actions";
+import {Item} from "../models/Item";
 
-export const items = (state:any = [], action) => {
+export const items = (state:Array<Item> = [], action) => {
   switch (action.type) {
 
     case ADD_ITEM:

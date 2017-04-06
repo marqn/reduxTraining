@@ -3,6 +3,7 @@ import {Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
 import {AppStore} from "../../models/appstore.model";
 import {ADD_ITEM} from "../../actions/actions";
+import {Item} from "../../models/Item";
 
 @Component({
   selector: 'app-item-details',
@@ -11,6 +12,7 @@ import {ADD_ITEM} from "../../actions/actions";
 export class ItemDetailsComponent {
 
   public items:Observable<any>;
+  public selectedItem:Observable<Item>;
 
   private id:number = 0;
   private nameItem:string = '';
@@ -18,11 +20,21 @@ export class ItemDetailsComponent {
 
   constructor(private store:Store<AppStore>) {
     this.items = store.select('items');
+    
+    this.selectedItem = store.select('selectedItem');
+    this.selectedItem.subscribe(v => {
+      console.log(v);
+     /* this.nameItem = v.name;
+      this.description = v.description;*/
+    });
   }
 
   saveItem() {
-    if(!this.isEmptyForm()) {
-      this.store.dispatch({type: ADD_ITEM, payload: {id: this.nextId(), name: this.nameItem, description: this.description}});
+    if (!this.isEmptyForm()) {
+      this.store.dispatch({
+        type: ADD_ITEM,
+        payload: {id: this.nextId(), name: this.nameItem, description: this.description}
+      });
       this.clearForm();
     }
   }
