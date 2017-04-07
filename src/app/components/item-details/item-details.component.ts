@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
 import {AppStore} from "../../models/appstore.model";
-import {ADD_ITEM} from "../../actions/actions";
+import {ADD_ITEM, UPDATE_ITEM} from "../../actions/actions";
 import {Item} from "../../models/Item";
 
 @Component({
@@ -15,6 +15,7 @@ export class ItemDetailsComponent {
   public selectedItem:Observable<Item>;
 
   private id:number = 0;
+  private idItem:number;
   private nameItem:string = '';
   private description:string = '';
 
@@ -25,6 +26,7 @@ export class ItemDetailsComponent {
     this.selectedItem.subscribe(v => {
       console.log(v);
       if(v) {
+        this.idItem = v.id;
         this.nameItem = v.name;
         this.description = v.description;
       }
@@ -33,9 +35,18 @@ export class ItemDetailsComponent {
 
   saveItem() {
     if (!this.isEmptyForm()) {
+
+      let actionType = UPDATE_ITEM;
+      if(!this.idItem)
+      {
+        //update
+        actionType = ADD_ITEM;
+        this.idItem = this.nextId();
+      }
+
       this.store.dispatch({
-        type: ADD_ITEM,
-        payload: {id: this.nextId(), name: this.nameItem, description: this.description}
+        type: actionType,
+        payload: {id: this.idItem, name: this.nameItem, description: this.description}
       });
       this.clearForm();
     }
@@ -46,6 +57,7 @@ export class ItemDetailsComponent {
   }
 
   private clearForm():void {
+    this.idItem = null;
     this.nameItem = '';
     this.description = '';
   }
