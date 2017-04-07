@@ -1,5 +1,4 @@
 import {Component} from "@angular/core";
-import {AppStore} from "../../models/appstore.model";
 import {Store} from "@ngrx/store";
 import {DELETE_ITEM} from "../../actions/actions";
 
@@ -11,7 +10,7 @@ export class ItemListComponent {
 
   private items:any;
 
-  constructor(private store:Store<AppStore>) {
+  constructor(private store:Store<void>) {
     store.select('items').subscribe(v => {
       this.items = v;
     });

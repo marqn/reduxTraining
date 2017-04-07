@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
-import {AppStore} from "../../models/appstore.model";
 import {ADD_ITEM, UPDATE_ITEM} from "../../actions/actions";
 import {Item} from "../../models/Item";
 
@@ -18,7 +17,7 @@ export class ItemDetailsComponent {
   private nameItem:string = '';
   private description:string = '';
 
-  constructor(private store:Store<AppStore>) {
+  constructor(private store:Store<void>) {
     this.items = store.select('items');
     this.items.subscribe(v => {
       this.clearForm();
