@@ -11,9 +11,8 @@ import {Item} from "../../models/Item";
 })
 export class ItemDetailsComponent {
 
-  public items:Observable<any>;
-  public selectedItem:Observable<Item>;
-
+  private items:Observable<any>;
+  private selectedItemStore:Observable<Item>;
   private id:number = 0;
   private idItem:number;
   private nameItem:string = '';
@@ -21,11 +20,13 @@ export class ItemDetailsComponent {
 
   constructor(private store:Store<AppStore>) {
     this.items = store.select('items');
+    this.items.subscribe(v => {
+      this.clearForm();
+    });
 
-    this.selectedItem = store.select('selectedItem');
-    this.selectedItem.subscribe(v => {
-      console.log(v);
-      if(v) {
+    this.selectedItemStore = store.select('selectedItem');
+    this.selectedItemStore.subscribe(v => {
+      if (v) {
         this.idItem = v.id;
         this.nameItem = v.name;
         this.description = v.description;
@@ -33,13 +34,12 @@ export class ItemDetailsComponent {
     });
   }
 
-  saveItem() {
+  private saveItem() {
     if (!this.isEmptyForm()) {
 
       let actionType = UPDATE_ITEM;
-      if(!this.idItem)
-      {
-        //update
+      if (!this.idItem) {
+        // Update item...
         actionType = ADD_ITEM;
         this.idItem = this.nextId();
       }
@@ -50,10 +50,6 @@ export class ItemDetailsComponent {
       });
       this.clearForm();
     }
-  }
-
-  clearItem() {
-    this.clearForm();
   }
 
   private clearForm():void {

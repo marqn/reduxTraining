@@ -7,8 +7,8 @@ export const items = (state:Array<Item> = [], action) => {
     case ADD_ITEM:
       return [
         Object.assign({},
-          {id: action.payload.id, name: action.payload.name, description: action.payload.description })
-        ,...state
+          {id: action.payload.id, name: action.payload.name, description: action.payload.description})
+        , ...state
       ];
 
     case UPDATE_ITEM:
@@ -23,4 +23,4 @@ export const items = (state:Array<Item> = [], action) => {
     default:
       return state;
   }
-}
+};

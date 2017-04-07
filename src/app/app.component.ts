@@ -1,7 +1,4 @@
-import { Component } from '@angular/core';
-import {Item} from "./models/Item";
-import {Observable} from "rxjs/Observable";
-import { Store } from '@ngrx/store';
+import {Component} from "@angular/core";
 
 @Component({
   selector: 'app-root',

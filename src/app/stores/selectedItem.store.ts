@@ -4,7 +4,7 @@ export const selectedItem = (state:any = null, action) => {
 
     case SELECT_ITEM:
       return action.payload;
-    
+
     default:
       return state;
   }

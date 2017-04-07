@@ -9,7 +9,7 @@ import {DELETE_ITEM} from "../../actions/actions";
 })
 export class ItemListComponent {
 
-  public items;
+  private items:any;
 
   constructor(private store:Store<AppStore>) {
     store.select('items').subscribe(v => {
@@ -17,7 +17,7 @@ export class ItemListComponent {
     });
   }
 
-  deleteItemHandler(idItem):void {
+  private deleteItemHandler(idItem):void {
     this.store.dispatch({type: DELETE_ITEM, payload: idItem});
   }
 

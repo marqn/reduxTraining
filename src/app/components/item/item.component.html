@@ -1,4 +1,7 @@
-<h4>{{item.name}}</h4>
-<h5>{{item.description}}</h5>
-<button class="btn-success glyphicon glyphicon-cloud-upload" (click)="selectItem()"></button>
-<button class="btn-danger glyphicon glyphicon-remove" (click)="delete.emit(this.item.id)"></button>
+<div (click)="selectItem()" style="cursor: pointer" title="Edit item" >
+  <div class="text-right">
+    <button class="btn-danger glyphicon glyphicon-remove" (click)="delete.emit(this.item.id)"></button>
+  </div>
+  <h4 class="text-center">{{item.name}}</h4>
+  <h5 class="text-center">{{item.description}}</h5>
+</div>
