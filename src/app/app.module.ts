@@ -10,6 +10,7 @@ import {ItemDetailsComponent} from "./components/item-details/item-details.compo
 import {items} from "./stores/items.store";
 import {selectedItem} from "./stores/selectedItem.store";
 import {ItemService} from "./services/item.service";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,10 @@ import {ItemService} from "./services/item.service";
     BrowserModule,
     FormsModule,
     HttpModule,
-    StoreModule.provideStore({items, selectedItem})
+    StoreModule.provideStore({items, selectedItem}),
+    StoreDevtoolsModule.instrumentOnlyWithExtension({
+      maxAge: 10
+    })
   ],
   providers: [ItemService],
   bootstrap: [AppComponent]
